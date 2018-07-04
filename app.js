@@ -12,14 +12,39 @@ var campgrounds = [
       'https://images.unsplash.com/photo-1508873696983-2dfd5898f08b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5cedc6b95f731395da7269d2341f9a5e&auto=format&fit=crop&w=1500&q=80'
   },
   {
-    name: 'Colorado Springs',
+    name: 'Salmon Creek',
     image:
-      'https://images.unsplash.com/photo-1445308394109-4ec2920981b1?ixlib=rb-0.3.5&s=73115e54fa3d099fcb2d92ccf12eee41&auto=format&fit=crop&w=1506&q=80'
+      'https://images.unsplash.com/photo-1476041800959-2f6bb412c8ce?ixlib=rb-0.3.5&s=3cea01429048ce122dff533448f43219&auto=format&fit=crop&w=1650&q=80'
   },
   {
-    name: 'Granite Hill',
+    name: 'Salmon Creek',
     image:
-      'https://images.unsplash.com/photo-1484960055659-a39d25adcb3c?ixlib=rb-0.3.5&s=14948b1b6a8dd54164a0db522662e869&auto=format&fit=crop&w=1500&q=80'
+      'https://images.unsplash.com/photo-1445308394109-4ec2920981b1?ixlib=rb-0.3.5&s=73115e54fa3d099fcb2d92ccf12eee41&auto=format&fit=crop&w=1653&q=80'
+  },
+  {
+    name: 'Salmon Creek',
+    image:
+      'https://images.unsplash.com/photo-1476041800959-2f6bb412c8ce?ixlib=rb-0.3.5&s=3cea01429048ce122dff533448f43219&auto=format&fit=crop&w=1650&q=80'
+  },
+  {
+    name: 'Salmon Creek',
+    image:
+      'https://images.unsplash.com/photo-1487730116645-74489c95b41b?ixlib=rb-0.3.5&s=adf3225f314db1ac216ea22b6e58e925&auto=format&fit=crop&w=1650&q=80'
+  },
+  {
+    name: 'Salmon Creek',
+    image:
+      'https://images.unsplash.com/photo-1486082570281-d942af5c39b7?ixlib=rb-0.3.5&s=c64bd8c13d331948149baf2a7e2ebf30&auto=format&fit=crop&w=1651&q=80'
+  },
+  {
+    name: 'Salmon Creek',
+    image:
+      'https://images.unsplash.com/photo-1468956398224-6d6f66e22c35?ixlib=rb-0.3.5&s=ceb1121831b576d6483acb67f8c10d35&auto=format&fit=crop&w=1655&q=80'
+  },
+  {
+    name: 'Salmon Creek',
+    image:
+      'https://images.unsplash.com/photo-1508873696983-2dfd5898f08b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5cedc6b95f731395da7269d2341f9a5e&auto=format&fit=crop&w=1500&q=80'
   }
 ];
 
