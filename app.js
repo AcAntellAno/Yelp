@@ -2,39 +2,12 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var YelpLocation = require('./models/campground.js');
 const _PORT = 8080;
 
 mongoose.connect('mongodb://localhost/yelp');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
-
-//DB Schema
-var yelpSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
-
-var YelpLocation = mongoose.model('YelpLocation', yelpSchema);
-
-// YelpLocation.create(
-//   {
-//     name: 'Granite Hill',
-//     image:
-//       'https://images.unsplash.com/photo-1508873696983-2dfd5898f08b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=5cedc6b95f731395da7269d2341f9a5e&auto=format&fit=crop&w=1500&q=80',
-//     description:
-//       'This is a large granite hill, no bathrooms. No water. Beautiful Granite!'
-//   },
-//   (err, YelpLocation) => {
-//     if (err) {
-//       console.log('Error occured...');
-//       console.log(err);
-//     } else {
-//       console.log('Newly Created Location');
-//       console.log(YelpLocation);
-//     }
-//   }
-// );
 
 app.get('/', (req, res) => {
   res.render('landing');
