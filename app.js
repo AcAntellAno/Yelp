@@ -10,6 +10,8 @@ mongoose.connect('mongodb://localhost/yelp');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
+seedDB();
+
 app.get('/', (req, res) => {
   res.render('landing');
 });
@@ -52,14 +54,17 @@ app.get('/campgrounds/new', (req, res) => {
 //SHOW => Shows more info about one location
 app.get('/campgrounds/:id', (req, res) => {
   //find campground with provided ID
-  YelpLocation.findById(req.params.id, (err, foundLocation) => {
-    if (err) {
-      console.log(err);
-    } else {
-      //render show template with that campground
-      res.render('show', { campgrounds: foundLocation });
-    }
-  });
+  YelpLocation.findById(req.params.id)
+    .populate('comments')
+    .exec((err, foundLocation) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(foundLocation);
+        //render show template with that campground
+        res.render('show', { campgrounds: foundLocation });
+      }
+    });
 });
 
 app.listen(_PORT, () => {
