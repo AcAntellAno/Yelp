@@ -23,7 +23,7 @@ app.get('/campgrounds', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.render('index', { campgrounds: YelpLocation }); //1st campgrounds = name, 2nd is our actual data
+      res.render('campgrounds/index', { campgrounds: YelpLocation }); //1st campgrounds = name, 2nd is our actual data
     }
   });
 });
@@ -48,7 +48,7 @@ app.post('/campgrounds', (req, res) => {
 
 //NEW => show form to make new site
 app.get('/campgrounds/new', (req, res) => {
-  res.render('new.ejs');
+  res.render('campgrounds/new');
 });
 
 //SHOW => Shows more info about one location
@@ -62,9 +62,22 @@ app.get('/campgrounds/:id', (req, res) => {
       } else {
         console.log(foundLocation);
         //render show template with that campground
-        res.render('show', { campgrounds: foundLocation });
+        res.render('campgrounds/show', { campgrounds: foundLocation });
       }
     });
+});
+
+//Comments Routes
+
+app.get('/campgrounds/:id/comments/new', (req, res) => {
+  //find campground by id
+  YelpLocation.findById(req.params.id, (err, place) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('comments/new', { campgrounds: place });
+    }
+  });
 });
 
 app.listen(_PORT, () => {
