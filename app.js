@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var YelpLocation = require('./models/campground.js');
+var Comment = require('./models/comment');
 var seedDB = require('./seeds');
 const _PORT = 8080;
 
@@ -76,6 +77,25 @@ app.get('/campgrounds/:id/comments/new', (req, res) => {
       console.log(err);
     } else {
       res.render('comments/new', { campgrounds: place });
+    }
+  });
+});
+
+app.post('/campgrounds/:id/comments', (req, res) => {
+  YelpLocation.findById(req.params.id, (err, location) => {
+    if (err) {
+      console.log(err);
+      res.redirect('/campgrounds');
+    } else {
+      Comment.create(req.body.comment, (err, comment) => {
+        if (err) {
+          console.log(err);
+        } else {
+          location.comments.push(comment);
+          location.save();
+          res.redirect('/campgrounds/' + location._id);
+        }
+      });
     }
   });
 });

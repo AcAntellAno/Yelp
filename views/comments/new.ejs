@@ -6,9 +6,9 @@
                 <%= campgrounds.name %>
             </h1>
             <div style="width: 30%; margin: 25px auto;">
-                <form action="/campgrounds/<%= campgrounds._id%>" method="POST">
+                <form action="/campgrounds/<%= campgrounds._id%>/comments" method="POST">
                     <div class="form-group">
-                        <input class="form-control" type="text" placeholder="Text" name="comment[comment]">
+                        <input class="form-control" type="text" placeholder="Comment" name="comment[text]">
                     </div>
                     <div class="form-group">
                         <input class="form-control" type="text" placeholder="Author" name="comment[author]">
