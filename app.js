@@ -10,7 +10,7 @@ const _PORT = 8080;
 mongoose.connect('mongodb://localhost/yelp');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
-
+app.use(express.static(__dirname + '/public'));
 seedDB();
 
 app.get('/', (req, res) => {
