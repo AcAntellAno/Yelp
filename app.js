@@ -16,6 +16,21 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 seedDB();
 
+//PASSPORT CONFIG
+app.use(
+  require('express-session')({
+    secret: 'fullstack developmetn ftw',
+    resave: false,
+    saveUninitialized: false
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.get('/', (req, res) => {
   res.render('landing');
 });
