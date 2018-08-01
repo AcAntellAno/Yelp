@@ -5,6 +5,9 @@ var mongoose = require('mongoose');
 var YelpLocation = require('./models/campground.js');
 var Comment = require('./models/comment');
 var seedDB = require('./seeds');
+var passport = require('passport');
+var User = require('./models/User');
+var LocalStrategy = require('passport-local');
 const _PORT = 8080;
 
 mongoose.connect('mongodb://localhost/yelp');
