@@ -118,6 +118,24 @@ app.post('/campgrounds/:id/comments', (req, res) => {
   });
 });
 
+//Auth Routes
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+//handle sign up logic
+app.post('/register', (req, res) => {
+  var newUser = new User({ username: req.body.username });
+  User.register(newUser, req.body.password, (err, user) => {
+    if (err) {
+      console.log(err);
+      return res.render('register');
+    }
+    passport.authenticate('local')(req, res, () => {
+      res.redirect('/campgrounds');
+    });
+  });
+});
+
 app.listen(_PORT, () => {
   console.log('The magic is on port 8080...');
 });
