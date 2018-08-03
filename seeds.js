@@ -49,37 +49,37 @@ var data = [
 function seedDB() {
   //remove campgrounds
   YelpLocation.remove({}, err => {
-    if (err) {
-      console.log(err);
-    }
-    console.log('Removed campgrounds');
-    //add a few campgrounds
-    data.forEach(seed => {
-      YelpLocation.create(seed, (err, location) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log('added location');
-          //create a comment
-          Comment.create(
-            {
-              text:
-                'This is a really cool place, but no bathrooms...gotta dig a hole',
-              author: 'Homer'
-            },
-            (err, comment) => {
-              if (err) {
-                console.log(err);
-              } else {
-                location.comments.push(comment);
-                location.save();
-                console.log('created new comment');
-              }
-            }
-          );
-        }
-      });
-    });
+    // if (err) {
+    //   console.log(err);
+    // }
+    // console.log('Removed campgrounds');
+    // //add a few campgrounds
+    // data.forEach(seed => {
+    //   YelpLocation.create(seed, (err, location) => {
+    //     if (err) {
+    //       console.log(err);
+    //     } else {
+    //       console.log('added location');
+    //       //create a comment
+    //       Comment.create(
+    //         {
+    //           text:
+    //             'This is a really cool place, but no bathrooms...gotta dig a hole',
+    //           author: 'Homer'
+    //         },
+    //         (err, comment) => {
+    //           if (err) {
+    //             console.log(err);
+    //           } else {
+    //             location.comments.push(comment);
+    //             location.save();
+    //             console.log('created new comment');
+    //           }
+    //         }
+    //       );
+    //     }
+    //   });
+    // });
   });
 
   //add a few comments
