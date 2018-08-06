@@ -14,25 +14,35 @@ router.get('/', (req, res) => {
 });
 
 //CREATE => adds new site to DB
-router.post('/', (req, res) => {
+router.post('/', isLoggedIn, (req, res) => {
   //get data from form and add to campgrounds array
   var campName = req.body.campName;
   var image = req.body.image;
   var desc = req.body.description;
-  var newCampground = { name: campName, image: image, description: desc };
+  var author = {
+    id: req.user._id,
+    username: req.user.username
+  };
+  var newCampground = {
+    name: campName,
+    image: image,
+    description: desc,
+    author: author
+  };
   //create a new campground and save to db
   YelpLocation.create(newCampground, (err, YelpLocation) => {
     if (err) {
       console.log(err);
     } else {
       //redirect back to campgrounds page
+      console.log(YelpLocation);
       res.redirect('/campgrounds');
     }
   });
 });
 
 //NEW => show form to make new site
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
   res.render('campgrounds/new');
 });
 
@@ -51,5 +61,13 @@ router.get('/:id', (req, res) => {
       }
     });
 });
+
+//Middlewear
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
 
 module.exports = router;
