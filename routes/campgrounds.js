@@ -89,7 +89,17 @@ router.put('/:id', (req, res) => {
       }
     }
   );
-  //redirect
+});
+
+//Destroy Route
+router.delete('/:id', (req, res) => {
+  YelpLocation.findByIdAndRemove(req.params.id, err => {
+    if (err) {
+      res.redirect('/campgrounds');
+    } else {
+      res.redirect('/campgrounds');
+    }
+  });
 });
 
 //Middlewear
