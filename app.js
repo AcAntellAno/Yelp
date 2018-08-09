@@ -8,6 +8,7 @@ var seedDB = require('./seeds');
 var passport = require('passport');
 var User = require('./models/User');
 var LocalStrategy = require('passport-local');
+var methodOverride = require('method-override');
 const _PORT = 8080;
 
 //Require Routes
@@ -19,6 +20,7 @@ mongoose.connect('mongodb://localhost/yelp');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
+app.use(methodOverride('_method'));
 //seedDB();
 
 //PASSPORT CONFIG

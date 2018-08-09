@@ -62,6 +62,36 @@ router.get('/:id', (req, res) => {
     });
 });
 
+//Edit Campground Route
+router.get('/:id/edit', (req, res) => {
+  YelpLocation.findById(req.params.id, (err, foundCampground) => {
+    if (err) {
+      console.log(err);
+      res.redirect('/campgrounds');
+    } else {
+      res.render('campgrounds/edit', { campground: foundCampground });
+    }
+  });
+});
+
+//Update campground route
+
+router.put('/:id', (req, res) => {
+  //find and update correct campground
+  YelpLocation.findByIdAndUpdate(
+    req.params.id,
+    req.body.campground,
+    (err, updatedCampground) => {
+      if (err) {
+        res.redirect('/campgrounds');
+      } else {
+        res.redirect('/campgrounds/' + req.params.id);
+      }
+    }
+  );
+  //redirect
+});
+
 //Middlewear
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
