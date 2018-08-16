@@ -63,20 +63,16 @@ router.get('/:id', (req, res) => {
 });
 
 //Edit Campground Route
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', checkCampgroundOwndership, (req, res) => {
+  //is user logged in
   YelpLocation.findById(req.params.id, (err, foundCampground) => {
-    if (err) {
-      console.log(err);
-      res.redirect('/campgrounds');
-    } else {
-      res.render('campgrounds/edit', { campground: foundCampground });
-    }
+    res.render('campgrounds/edit', { campground: foundCampground });
   });
 });
 
 //Update campground route
 
-router.put('/:id', (req, res) => {
+router.put('/:id', checkCampgroundOwndership, (req, res) => {
   //find and update correct campground
   YelpLocation.findByIdAndUpdate(
     req.params.id,
@@ -92,7 +88,7 @@ router.put('/:id', (req, res) => {
 });
 
 //Destroy Route
-router.delete('/:id', (req, res) => {
+router.delete('/:id', checkCampgroundOwndership, (req, res) => {
   YelpLocation.findByIdAndRemove(req.params.id, err => {
     if (err) {
       res.redirect('/campgrounds');
@@ -108,6 +104,25 @@ function isLoggedIn(req, res, next) {
     return next();
   }
   res.redirect('/login');
+}
+
+function checkCampgroundOwndership(req, res, next) {
+  if (req.isAuthenticated()) {
+    YelpLocation.findById(req.params.id, (err, foundCampground) => {
+      if (err) {
+        console.log(err);
+        res.redirect('back');
+      } else {
+        if (foundCampground.author.id.equals(req.user._id)) {
+          next();
+        } else {
+          res.redirect('back');
+        }
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
 }
 
 module.exports = router;
