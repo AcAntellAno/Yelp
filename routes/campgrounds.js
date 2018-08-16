@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var YelpLocation = require('../models/campground');
+var middleware = require('../middleware');
 //INDEX => Show all sites
 router.get('/', (req, res) => {
   //get all locations from DBs
@@ -8,13 +9,15 @@ router.get('/', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.render('campgrounds/index', { campgrounds: YelpLocation }); //1st campgrounds = name, 2nd is our actual data
+      res.render('campgrounds/index', {
+        campgrounds: YelpLocation
+      }); //1st campgrounds = name, 2nd is our actual data
     }
   });
 });
 
 //CREATE => adds new site to DB
-router.post('/', isLoggedIn, (req, res) => {
+router.post('/', middleware.isLoggedIn, (req, res) => {
   //get data from form and add to campgrounds array
   var campName = req.body.campName;
   var image = req.body.image;
@@ -42,7 +45,7 @@ router.post('/', isLoggedIn, (req, res) => {
 });
 
 //NEW => show form to make new site
-router.get('/new', isLoggedIn, (req, res) => {
+router.get('/new', middleware.isLoggedIn, (req, res) => {
   res.render('campgrounds/new');
 });
 
@@ -57,22 +60,26 @@ router.get('/:id', (req, res) => {
       } else {
         console.log(foundLocation);
         //render show template with that campground
-        res.render('campgrounds/show', { campgrounds: foundLocation });
+        res.render('campgrounds/show', {
+          campgrounds: foundLocation
+        });
       }
     });
 });
 
 //Edit Campground Route
-router.get('/:id/edit', checkCampgroundOwndership, (req, res) => {
+router.get('/:id/edit', middleware.checkCampgroundOwndership, (req, res) => {
   //is user logged in
   YelpLocation.findById(req.params.id, (err, foundCampground) => {
-    res.render('campgrounds/edit', { campground: foundCampground });
+    res.render('campgrounds/edit', {
+      campground: foundCampground
+    });
   });
 });
 
 //Update campground route
 
-router.put('/:id', checkCampgroundOwndership, (req, res) => {
+router.put('/:id', middleware.checkCampgroundOwndership, (req, res) => {
   //find and update correct campground
   YelpLocation.findByIdAndUpdate(
     req.params.id,
@@ -88,7 +95,7 @@ router.put('/:id', checkCampgroundOwndership, (req, res) => {
 });
 
 //Destroy Route
-router.delete('/:id', checkCampgroundOwndership, (req, res) => {
+router.delete('/:id', middleware.checkCampgroundOwndership, (req, res) => {
   YelpLocation.findByIdAndRemove(req.params.id, err => {
     if (err) {
       res.redirect('/campgrounds');
@@ -97,32 +104,5 @@ router.delete('/:id', checkCampgroundOwndership, (req, res) => {
     }
   });
 });
-
-//Middlewear
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-}
-
-function checkCampgroundOwndership(req, res, next) {
-  if (req.isAuthenticated()) {
-    YelpLocation.findById(req.params.id, (err, foundCampground) => {
-      if (err) {
-        console.log(err);
-        res.redirect('back');
-      } else {
-        if (foundCampground.author.id.equals(req.user._id)) {
-          next();
-        } else {
-          res.redirect('back');
-        }
-      }
-    });
-  } else {
-    res.redirect('back');
-  }
-}
 
 module.exports = router;
