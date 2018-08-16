@@ -47,6 +47,7 @@ router.post('/', isLoggedIn, (req, res) => {
   });
 });
 
+//Edit Route
 router.get('/:comment_id/edit', (req, res) => {
   Comment.findById(req.params.comment_id, (err, foundComment) => {
     if (err) {
@@ -59,6 +60,18 @@ router.get('/:comment_id/edit', (req, res) => {
     }
   });
 });
+
+//Update Route
+router.put('/:comment_id', (req, res) => {
+  Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, upatedComment) => {
+    if (err) {
+      res.redirect('back');
+    } else {
+      res.redirect("/campgrounds/" + req.params.id);
+    }
+  })
+});
+
 //Middlewear
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
