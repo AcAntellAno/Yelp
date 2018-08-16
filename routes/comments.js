@@ -1,5 +1,7 @@
 var express = require('express');
-var router = express.Router({ mergeParams: true });
+var router = express.Router({
+  mergeParams: true
+});
 var YelpLocation = require('../models/campground');
 var Comment = require('../models/comment');
 
@@ -11,7 +13,9 @@ router.get('/new', isLoggedIn, (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.render('comments/new', { campgrounds: place });
+      res.render('comments/new', {
+        campgrounds: place
+      });
     }
   });
 });
@@ -43,6 +47,18 @@ router.post('/', isLoggedIn, (req, res) => {
   });
 });
 
+router.get('/:comment_id/edit', (req, res) => {
+  Comment.findById(req.params.comment_id, (err, foundComment) => {
+    if (err) {
+      res.redirect('back');
+    } else {
+      res.render('comments/edit', {
+        campground_id: req.params.id,
+        comment: foundComment
+      });
+    }
+  });
+});
 //Middlewear
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
