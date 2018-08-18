@@ -6,7 +6,7 @@ var middlewareObject = {};
 middlewareObject.checkCampgroundOwndership = (req, res, next) => {
     if (req.isAuthenticated()) {
         YelpLocation.findById(req.params.id, (err, foundCampground) => {
-            if (err) {
+            if (err || !foundCampground) {
                 req.flash('error', "Location not found");
                 console.log(err);
                 res.redirect('back');
@@ -28,7 +28,8 @@ middlewareObject.checkCampgroundOwndership = (req, res, next) => {
 middlewareObject.checkCommentOwnership = (req, res, next) => {
     if (req.isAuthenticated()) {
         Comment.findById(req.params.comment_id, (err, foundComment) => {
-            if (err) {
+            if (err || !foundComment) {
+                req.flash('error', 'Comment not found');
                 console.log(err);
                 res.redirect('back');
             } else {

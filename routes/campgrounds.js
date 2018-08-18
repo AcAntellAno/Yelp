@@ -55,8 +55,10 @@ router.get('/:id', (req, res) => {
   YelpLocation.findById(req.params.id)
     .populate('comments')
     .exec((err, foundLocation) => {
-      if (err) {
+      if (err || !foundLocation) {
         console.log(err);
+        req.flash('error', "Campground Not Found");
+        res.redirect('back')
       } else {
         console.log(foundLocation);
         //render show template with that campground
