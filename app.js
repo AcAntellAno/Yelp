@@ -10,7 +10,7 @@ var passport = require('passport');
 var User = require('./models/User');
 var LocalStrategy = require('passport-local');
 var methodOverride = require('method-override');
-const _PORT = 8080;
+//const _PORT = 8080;
 
 //Require Routes
 var commentRoutes = require('./routes/comments'),
@@ -56,6 +56,6 @@ app.use('/', indexRoutes);
 app.use('/campgrounds/:id/comments', commentRoutes);
 app.use('/campgrounds', campgroundRoutes);
 
-app.listen(_PORT, () => {
+app.listen(process.env.PORT || 3000, process.env.IP, () => {
   console.log('The magic is on port 8080...');
 });
